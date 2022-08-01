@@ -11,6 +11,7 @@ import javax.persistence.*;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 
 @Entity
+@Table(name = "TB_USER")
 public class User {
 
     @Id
@@ -18,7 +19,7 @@ public class User {
     @EqualsAndHashCode.Include
     private Long id;
     private String name;
-    @Column(unique = true)
     private String email;
     private String password;
+
 }
