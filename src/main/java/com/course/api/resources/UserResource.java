@@ -1,6 +1,5 @@
-package com.course.api.controllers;
+package com.course.api.resources;
 
-import com.course.api.domain.User;
 import com.course.api.domain.dto.UserDTO;
 import com.course.api.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -15,7 +14,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserResource {
 
     @Autowired
     private UserService userService;

@@ -1,5 +1,6 @@
 package com.course.api.repository.exceptions;
 
+import com.course.api.service.exceptions.DataIntegratyViolationException;
 import com.course.api.service.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,12 @@ public class RepositoryExceptionHandler {
     public ResponseEntity<StandardError> objNotFound(ObjectNotFoundException ex, HttpServletRequest request){
         var error = new StandardError(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), ex.getMessage(),request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+
+    }
+     @ExceptionHandler(DataIntegratyViolationException.class)
+    public ResponseEntity<StandardError> objNotFound(DataIntegratyViolationException ex, HttpServletRequest request){
+        var error = new StandardError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), ex.getMessage(),request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 
     }
 
