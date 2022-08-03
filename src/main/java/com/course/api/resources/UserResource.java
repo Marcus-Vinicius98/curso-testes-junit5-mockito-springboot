@@ -1,5 +1,6 @@
 package com.course.api.resources;
 
+import com.course.api.domain.User;
 import com.course.api.domain.dto.UserDTO;
 import com.course.api.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -37,5 +38,20 @@ public class UserResource {
       URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
               .buildAndExpand(userService.create(obj).getId()).toUri();
       return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<UserDTO> update(@PathVariable long id,@RequestBody UserDTO obj){
+        obj.setId(id);
+
+        return ResponseEntity.ok().body(mapper.map(userService.update(obj), UserDTO.class));
+
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<UserDTO> deleteById(@PathVariable Long id){
+        userService.findById(id);
+        return ResponseEntity.noContent().build();
+
+
     }
 }

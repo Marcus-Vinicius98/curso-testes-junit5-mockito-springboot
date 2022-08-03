@@ -8,6 +8,8 @@ import com.course.api.service.exceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,9 +40,24 @@ public class UserServiceImpl implements UserService {
         findByEmail(obj);
         return userRepository.save(mapper.map(obj,User.class));
     }
+
+    @Override
+
+    public User update(UserDTO obj) {
+        findByEmail(obj);
+        return userRepository.save(mapper.map(obj,User.class));
+        }
+
+    @Override
+    public void delete(Long id) {
+        findById(id);
+        userRepository.deleteById(id);
+    }
+
+
     public void findByEmail(UserDTO obj){
       Optional<User> user = userRepository.findByEmail(obj.getEmail());
-      if (user.isPresent()){
+      if (user.isPresent() && !user.get().getId().equals(obj.getId())){
           throw new DataIntegratyViolationException("Email já cadastrado no sistema");
       }
     }
