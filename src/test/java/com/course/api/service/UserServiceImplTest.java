@@ -14,6 +14,7 @@ import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
@@ -26,6 +27,10 @@ class UserServiceImplTest {
 
 
     public static final long ID = 1L;
+    public static final String Name = "Marcus";
+    public static final String EMAIL = "marcus@gmail.com";
+    public static final String PASSWORD = "123";
+    public static final int INDEX = 0;
     @InjectMocks
     private UserServiceImpl service;
 
@@ -58,8 +63,8 @@ class UserServiceImplTest {
 
         assertEquals(User.class,response.getClass());
         assertEquals(ID,response.getId());
-        assertEquals("Marcus", response.getName());
-        assertEquals("marcus@gmail.com", response.getEmail());
+        assertEquals(Name, response.getName());
+        assertEquals(EMAIL, response.getEmail());
 
     }
     @Test
@@ -76,6 +81,17 @@ class UserServiceImplTest {
 
     @Test
     void findAll() {
+        when(repository.findAll()).thenReturn(List.of(user));
+
+        List<User> response = service.findAll();
+        assertNotNull(response);
+        assertEquals(1,response.size());
+        assertEquals(User.class,response.get(INDEX).getClass());
+
+        assertEquals(ID,response.get(INDEX).getId());
+        assertEquals(Name,response.get(INDEX).getName());
+        assertEquals(EMAIL,response.get(INDEX).getEmail());
+        assertEquals(PASSWORD,response.get(INDEX).getPassword());
     }
 
     @Test
@@ -95,8 +111,8 @@ class UserServiceImplTest {
     }
 
     private void startUser(){
-         user = new User(ID,"Marcus","marcus@gmail.com","123");
-         userDTO = new UserDTO(ID, "Marcus", "marcus@gmail.com", "123");
-        optionalUser = Optional.of(new User(ID,"Marcus","marcus@gmail.com","123"));
+         user = new User(ID, Name, EMAIL, PASSWORD);
+         userDTO = new UserDTO(ID, Name, EMAIL, PASSWORD);
+        optionalUser = Optional.of(new User(ID, Name, EMAIL, PASSWORD));
     }
 }
