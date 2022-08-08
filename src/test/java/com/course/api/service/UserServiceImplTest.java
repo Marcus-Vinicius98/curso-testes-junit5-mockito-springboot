@@ -6,6 +6,7 @@ import com.course.api.repository.UserRepository;
 
 import com.course.api.service.exceptions.DataIntegratyViolationException;
 import com.course.api.service.exceptions.ObjectNotFoundException;
+import org.h2.command.dml.MergeUsing;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -152,6 +153,16 @@ class UserServiceImplTest {
         doNothing().when(repository).deleteById(anyLong());
         service.delete(ID);
         verify(repository,times(1)).deleteById(anyLong());
+    }
+    @Test
+    void deleteWithObjectNotFoundException(){
+        when(repository.findById(anyLong())).thenThrow(new ObjectNotFoundException("Objeto não encontrado"));
+        try {
+            service.delete(ID);
+        }catch (Exception ex) {
+            assertEquals(ObjectNotFoundException.class, ex.getClass());
+            assertEquals("Objeto não encontrado",ex.getMessage());
+        }
     }
 
     @Test
