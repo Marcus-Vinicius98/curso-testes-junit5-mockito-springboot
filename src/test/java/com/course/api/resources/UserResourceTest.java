@@ -11,8 +11,11 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -38,6 +41,7 @@ class UserResourceTest {
 
     @Mock
     private ModelMapper mapper;
+
 
     private User user;
 
@@ -70,6 +74,22 @@ class UserResourceTest {
 
     @Test
     void findAll() {
+        when(service.findAll()).thenReturn(List.of(user));
+        when(mapper.map(any(),any())).thenReturn(userDTO);
+
+        ResponseEntity<List<UserDTO>> response = resource.findAll();
+
+        assertNotNull(response);
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(ResponseEntity.class,response.getClass());
+        assertEquals(ArrayList.class,response.getBody().getClass());
+        assertEquals(UserDTO.class,response.getBody().get(0).getClass());
+
+        assertEquals(ID,response.getBody().get(INDEX).getId());
+        assertEquals(Name,response.getBody().get(INDEX).getName());
+        assertEquals(EMAIL,response.getBody().get(INDEX).getEmail());
+        assertEquals(PASSWORD,response.getBody().get(INDEX).getPassword());
 
     }
 
