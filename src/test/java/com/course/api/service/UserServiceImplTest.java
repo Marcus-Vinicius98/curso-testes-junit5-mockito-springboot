@@ -6,7 +6,6 @@ import com.course.api.repository.UserRepository;
 
 import com.course.api.service.exceptions.DataIntegratyViolationException;
 import com.course.api.service.exceptions.ObjectNotFoundException;
-import org.h2.command.dml.MergeUsing;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
