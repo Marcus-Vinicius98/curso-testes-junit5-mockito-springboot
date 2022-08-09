@@ -7,13 +7,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
+import java.util.ResourceBundle;
 
+import static net.bytebuddy.matcher.ElementMatchers.any;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class UserResourceTest {
@@ -47,10 +53,24 @@ class UserResourceTest {
 
     @Test
     void findById() {
+        when(service.findById(anyLong())).thenReturn(user);
+        when(mapper.map(any(),Mockito.any())).thenReturn(userDTO);
+
+        ResponseEntity<UserDTO> response = resource.findById(ID);
+
+        assertNotNull(response);
+        assertNotNull(response.getBody());
+        assertEquals(UserDTO.class, response.getBody().getClass());
+
+        assertEquals(ID,response.getBody().getId());
+        assertEquals(Name,response.getBody().getName());
+        assertEquals(EMAIL,response.getBody().getEmail());
+        assertEquals(PASSWORD,response.getBody().getPassword());
     }
 
     @Test
     void findAll() {
+
     }
 
     @Test
