@@ -58,7 +58,7 @@ class UserResourceTest {
     @Test
     void findById() {
         when(service.findById(anyLong())).thenReturn(user);
-        when(mapper.map(any(),Mockito.any())).thenReturn(userDTO);
+        when(mapper.map(Mockito.any(),Mockito.any())).thenReturn(userDTO);
 
         ResponseEntity<UserDTO> response = resource.findById(ID);
 
@@ -106,6 +106,20 @@ class UserResourceTest {
 
     @Test
     void update() {
+        when(service.update(userDTO)).thenReturn(user);
+        when(mapper.map(Mockito.any(),Mockito.any())).thenReturn(userDTO);
+
+        ResponseEntity<UserDTO> response = resource.update(ID, userDTO);
+
+        assertNotNull(response);
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertEquals(UserDTO.class,response.getBody().getClass());
+
+        assertEquals(ID,response.getBody().getId());
+        assertEquals(Name,response.getBody().getName());
+        assertEquals(EMAIL,response.getBody().getEmail());
     }
 
     @Test
