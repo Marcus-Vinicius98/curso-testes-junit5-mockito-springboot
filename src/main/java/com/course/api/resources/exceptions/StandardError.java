@@ -1,10 +1,9 @@
-package com.course.api.repository.exceptions;
+package com.course.api.resources.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter

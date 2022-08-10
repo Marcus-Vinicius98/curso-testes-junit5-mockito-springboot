@@ -22,12 +22,12 @@ import java.util.ResourceBundle;
 import static net.bytebuddy.matcher.ElementMatchers.any;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class UserResourceTest {
 
-    public static final long ID = 1L;
+    public static final long ID = 1;
     public static final String Name = "Marcus";
     public static final String EMAIL = "marcus@gmail.com";
     public static final String PASSWORD = "123";
@@ -123,7 +123,17 @@ class UserResourceTest {
     }
 
     @Test
-    void deleteById() {
+    void delete() {
+        doNothing().when(service).delete(anyLong());
+
+        ResponseEntity<UserDTO> response = resource.delete(ID);
+
+        assertNotNull(response);
+        assertEquals(ResponseEntity.class,response.getClass());
+        assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+        verify(service,times(1)).delete(anyLong());
+
+
     }
 
     private void startUser(){

@@ -1,4 +1,4 @@
-package com.course.api.repository.exceptions;
+package com.course.api.resources.exceptions;
 
 import com.course.api.service.exceptions.DataIntegratyViolationException;
 import com.course.api.service.exceptions.ObjectNotFoundException;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
 @ControllerAdvice
-public class RepositoryExceptionHandler {
+public class ResourceExceptionHandler {
 
     @ExceptionHandler(ObjectNotFoundException.class)
     public ResponseEntity<StandardError> objNotFound(ObjectNotFoundException ex, HttpServletRequest request){
