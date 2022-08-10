@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 class UserResourceTest {
 
-    public static final long ID = 1;
+    public static final long ID = 1L;
     public static final String Name = "Marcus";
     public static final String EMAIL = "marcus@gmail.com";
     public static final String PASSWORD = "123";
@@ -43,9 +43,9 @@ class UserResourceTest {
     private ModelMapper mapper;
 
 
-    private User user;
+    private User user = new User();
 
-    private UserDTO userDTO;
+    private UserDTO userDTO = new UserDTO();
 
 
 

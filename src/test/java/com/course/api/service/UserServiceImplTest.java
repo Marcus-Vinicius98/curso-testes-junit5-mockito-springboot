@@ -136,7 +136,7 @@ class UserServiceImplTest {
     void whenUpdateThenReturnAnDataIntegrityViolationException(){
 
         when(repository.findByEmail(anyString())).thenReturn(optionalUser);
-        optionalUser.get().setId(2L);
+        optionalUser.get().setId(1L);
 
         try {
             service.create(userDTO);
@@ -157,7 +157,7 @@ class UserServiceImplTest {
     void deleteWithObjectNotFoundException(){
         when(repository.findById(anyLong())).thenThrow(new ObjectNotFoundException("Objeto não encontrado"));
         try {
-            service.delete(ID);
+            service.delete(1L);
         }catch (Exception ex) {
             assertEquals(ObjectNotFoundException.class, ex.getClass());
             assertEquals("Objeto não encontrado",ex.getMessage());
@@ -169,8 +169,8 @@ class UserServiceImplTest {
     }
 
     private void startUser(){
-         user = new User(ID, Name, EMAIL, PASSWORD);
-         userDTO = new UserDTO(ID, Name, EMAIL, PASSWORD);
-        optionalUser = Optional.of(new User(ID, Name, EMAIL, PASSWORD));
+         user = new User(1L, Name, EMAIL, PASSWORD);
+         userDTO = new UserDTO(1L, Name, EMAIL, PASSWORD);
+        optionalUser = Optional.of(new User(1L, Name, EMAIL, PASSWORD));
     }
 }
